@@ -1,0 +1,18 @@
+{
+  "name": "orion",
+  "version": "1.0.0",
+  "description": "Finds realtime transit data and sends it to Cassandra",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EddyIonescu/orion.git"
+  },
+  "author": "Eddy",
+  "bugs": {
+    "url": "https://github.com/EddyIonescu/orion/issues"
+  },
+  "homepage": "https://github.com/EddyIonescu/orion#readme"
+}
