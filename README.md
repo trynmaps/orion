@@ -1,5 +1,5 @@
 # orion
-Finds transit data (agencies, routes (GeoJSON), realtime vehicle locations) and sends it to Cassandra
+Finds (or rather, hunts for) transit data (agencies, routes (GeoJSON), realtime vehicle locations) and sends it to Cassandra
 
 
 ## Etymology
