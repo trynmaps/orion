@@ -23,7 +23,7 @@ function updateMuniVehicles() {
 function makeOrionVehicleFromNextbus(nextbusObject) {
     const { id, routeId, lat, lon, heading } = nextbusObject;
     return {
-        rid: routeID,
+        rid: routeId,
         vid: id,
         lat,
         lon,
@@ -38,7 +38,7 @@ function addVehiclesToCassandra(vehicles) {
     const queries = vehicles.map(vehicle => {
         const {rid, vid, lat, lon, heading} = vehicle;
         return {
-            query: 'INSERT INTO muni (vdate, vhour, rid, vid, vtime, lat, lon, heading) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            query: 'INSERT INTO muni.muni_realtime_vehicles (vdate, vhour, rid, vid, vtime, lat, lon, heading) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
             params: [vdate, vhour, rid, vid, vtime, lat, lon, heading],
         };
     });
