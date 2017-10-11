@@ -17,5 +17,3 @@ CREATE TABLE muni.muni_realtime_vehicles (
     heading int,
 PRIMARY KEY ((vdate, vhour), rid, vid, vtime)
 );
-
-
