@@ -12,7 +12,7 @@ function cassandraBatch(queries) {
     client.batch(queries, { prepare: true }, (err) => {
         console.log(err);
         console.log('Data updated on cluster');
-     });
+    });
 }
 
 module.exports = cassandraBatch;
