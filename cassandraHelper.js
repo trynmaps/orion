@@ -8,9 +8,11 @@ client.connect((err) => {
     assert.ifError(err);
 });
 
-export default function cassandraBatch(queries) {
+function cassandraBatch(queries) {
     client.batch(queries, { prepare: true }, (err) => {
         assert.ifError(err);
         console.log('Data updated on cluster');
      });
 }
+
+module.exports = cassandraBatch;

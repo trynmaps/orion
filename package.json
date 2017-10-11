@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/EddyIonescu/orion#readme",
   "dependencies": {
+    "axios": "^0.16.2",
     "cassandra-driver": "^3.3.0"
   }
 }
