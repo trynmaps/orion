@@ -14,5 +14,8 @@
   "bugs": {
     "url": "https://github.com/EddyIonescu/orion/issues"
   },
-  "homepage": "https://github.com/EddyIonescu/orion#readme"
+  "homepage": "https://github.com/EddyIonescu/orion#readme",
+  "dependencies": {
+    "cassandra-driver": "^3.3.0"
+  }
 }
