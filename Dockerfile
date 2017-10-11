@@ -13,11 +13,10 @@ COPY . .
 # Use prod-config, comment out to use dev-config
 COPY prod-config.json ./config.json
 
-EXPOSE 1337
 CMD [ "npm", "start" ]
 
 # Build
 # docker build -t orion .
 
 # Run
-# docker run -p 1337:1337 orion:latest
+# docker run orion:latest
