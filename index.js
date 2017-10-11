@@ -3,14 +3,10 @@ const cassandraBatch = require('./cassandraHelper');
 const config = require('./config');
 
 
-while(true) {
-    if (Math.floor(Date.now() / 1000) % 15 === 0) {
-        updateMuniVehicles();
-    }
-}
+setInterval(updateMuniVehicles, 15000);
 
 function updateMuniVehicles() {
-    axios.get('/agencies/sf-muni/vehicles', {
+    return axios.get('/agencies/sf-muni/vehicles', {
         baseURL: config.restbusURL
     })
     .then((response) => {
