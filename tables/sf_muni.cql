@@ -15,5 +15,5 @@ CREATE TABLE muni.muni_realtime_vehicles (
     lat float,
     lon float,
     heading int,
-PRIMARY KEY ((vdate, vhour), rid, vid, vtime)
+PRIMARY KEY ((vdate, vhour), vtime, rid, vid)
 );
