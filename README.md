@@ -7,7 +7,7 @@ Finds (or rather, hunts for) transit data (agencies, routes (GeoJSON), realtime 
 Many TTC buses are of the Orion VII Model while Orion was also a giant huntsman that could walk on water (being Poseidon's son). Orion and Cassandra are both Greek mythological figures.
 
 
-## Getting started
+## Getting started (Mac OS)
 
 1. Clone this repo.
 2. Install cqlsh via `pip install cql`.
@@ -18,6 +18,10 @@ Many TTC buses are of the Orion VII Model while Orion was also a giant huntsman 
 6. Go to tables, and run each of the CQL scripts.
 7. Run `npm install`.
 8. Run `npm start`.
+
+## Getting started (Linux)
+
+TODO
 
 See our getting started guide for contribution and deployment guidelines.
 https://docs.google.com/document/d/1KTWRc4EO63_lDxjcp0mmprgrFPfFazWJEy2MwxBuw4E/edit?usp=sharing
