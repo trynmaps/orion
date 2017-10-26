@@ -1,4 +1,4 @@
 {
     "restbusURL": "http://restbus.info/api/",
-    "cassandraURL": "127.0.0.1:5001"
+    "cassandraURL": "127.0.0.1:9042"
 }
