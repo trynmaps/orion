@@ -1,13 +1,17 @@
-# orion
-Finds (or rather, hunts for) transit data (agencies, routes (GeoJSON), realtime vehicle locations) and sends it to Cassandra
+## Orion
 
+Finds (or rather, hunts for) transit data (agencies, routes (GeoJSON), realtime vehicle locations) and sends it to Cassandra
 
 ## Etymology
 
 Many TTC buses are of the Orion VII Model while Orion was also a giant huntsman that could walk on water (being Poseidon's son). Orion and Cassandra are both Greek mythological figures.
 
+## Getting Started
 
-## Getting started (Mac OS)
+See our welcome doc for contribution and deployment guidelines.
+https://docs.google.com/document/d/1KTWRc4EO63_lDxjcp0mmprgrFPfFazWJEy2MwxBuw4E/edit?usp=sharing
+
+## MacOS
 
 1. Clone this repo.
 2. Install cqlsh via `pip install cql`.
@@ -19,9 +23,6 @@ Many TTC buses are of the Orion VII Model while Orion was also a giant huntsman 
 7. Run `npm install`.
 8. Run `npm start`.
 
-## Getting started (Linux)
+## Linux
 
 TODO
-
-See our getting started guide for contribution and deployment guidelines.
-https://docs.google.com/document/d/1KTWRc4EO63_lDxjcp0mmprgrFPfFazWJEy2MwxBuw4E/edit?usp=sharing
