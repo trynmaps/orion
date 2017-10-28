@@ -9,8 +9,8 @@ CREATE KEYSPACE muni WITH REPLICATION = {
 CREATE TABLE muni.muni_realtime_vehicles ( 
     vdate date, 
     vhour smallint, 
-    rid ascii, 
-    vid int,
+    rid ascii,
+    vid ascii,
     vtime timestamp,
     lat float,
     lon float,
