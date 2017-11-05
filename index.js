@@ -10,9 +10,9 @@ function updateMuniVehicles() {
         baseURL: config.restbusURL
     })
     .then((response) => {
-        console.log(response);
         const vehicles = response.data;
-        return vehicles.map(makeOrionVehicleFromNextbus);
+        console.log(vehicles);
+	return vehicles.map(makeOrionVehicleFromNextbus);
     })
     .then(addVehiclesToCassandra)
     .catch((error) => {
