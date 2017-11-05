@@ -21,7 +21,8 @@ https://docs.google.com/document/d/1KTWRc4EO63_lDxjcp0mmprgrFPfFazWJEy2MwxBuw4E/
 5. Run `cqlsh` in your terminal.
 6. Go to tables, and run each of the CQL scripts.
 7. Run `npm install`.
-8. Run `npm start`.
+8. Ensure restbus (https://github.com/trynmaps/restbus) is running.
+9. Run `npm start`.
 
 ## Linux
 
