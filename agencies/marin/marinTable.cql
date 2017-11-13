@@ -1,14 +1,14 @@
--- Stores an hour of all Muni vehicle
+-- Stores an hour of all Marin vehicle
 -- locations in 15-second intervals
 
-CREATE KEYSPACE muni WITH REPLICATION = { 
+CREATE KEYSPACE marin WITH REPLICATION = { 
     'class': 'SimpleStrategy',
     'replication_factor': 1 
 };
 
-CREATE TABLE muni.muni_realtime_vehicles ( 
-    vdate date, 
-    vhour smallint, 
+CREATE TABLE marin.marin_realtime_vehicles ( 
+    vdate date,
+    vhour smallint,
     rid ascii,
     vid ascii,
     vtime timestamp,
