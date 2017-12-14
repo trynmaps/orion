@@ -13,6 +13,16 @@ https://docs.google.com/document/d/1KTWRc4EO63_lDxjcp0mmprgrFPfFazWJEy2MwxBuw4E/
 
 ## MacOS
 
+## Prerequisites
+
+- Homebrew
+- Node 8 (`node --v` should be 8.*.*)
+- Java 8 (`java -version` should be 1.8.*)
+- Pip
+- Python
+
+## Steps
+
 1. Clone this repo.
 2. Install cqlsh via `pip install cql`.
 3. Install Cassandra via `brew install cassandra`.
