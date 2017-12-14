@@ -18,11 +18,12 @@ https://docs.google.com/document/d/1KTWRc4EO63_lDxjcp0mmprgrFPfFazWJEy2MwxBuw4E/
 3. Install Cassandra via `brew install cassandra`.
 4. Start Cassandra via `launchctl start homebrew.mxcl.cassandra`.
    You can stop Cassandra via `launchctl stop homebrew.mxcl.cassandra`.
-5. Run `cqlsh` in your terminal.
-6. Go to tables, and run each of the CQL scripts.
-7. Run `npm install`.
-8. Ensure restbus (https://github.com/trynmaps/restbus) is running.
-9. Run `npm start`.
+5. Run `cassandra` to start Cassandra.
+6. Run `cqlsh` in your terminal. This confirms that Cassandra is running.
+7. Go to tables, and run each of the CQL scripts (do this by running the contents of each file into the `cqlsh` terminal).
+8. Run `npm install`.
+9. Ensure restbus (https://github.com/trynmaps/restbus) is running.
+10. Run `npm start`. Remember to eventually stop this as otherwise Cassandra will eat all your memory. If that's the case, feel free to truncate the table.
 
 ## Linux
 
