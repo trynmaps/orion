@@ -20,6 +20,7 @@ https://docs.google.com/document/d/1KTWRc4EO63_lDxjcp0mmprgrFPfFazWJEy2MwxBuw4E/
 - Java 8 (`java -version` should be 1.8.*)
 - Pip
 - Python
+- Set up Restbus (https://github.com/trynmaps/restbus) is running.
 
 ## Steps
 
