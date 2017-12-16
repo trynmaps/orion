@@ -16,11 +16,11 @@ https://docs.google.com/document/d/1KTWRc4EO63_lDxjcp0mmprgrFPfFazWJEy2MwxBuw4E/
 ## Prerequisites
 
 - Homebrew
-- Node 8 (`node --v` should be 8.*.*)
+- Node 8 (`node --v` should be 8.\*.\*)
 - Java 8 (`java -version` should be 1.8.*)
 - Pip
 - Python
-- Set up Restbus (https://github.com/trynmaps/restbus) is running.
+- Set up Restbus (https://github.com/trynmaps/restbus)
 
 ## Steps
 
@@ -31,11 +31,11 @@ https://docs.google.com/document/d/1KTWRc4EO63_lDxjcp0mmprgrFPfFazWJEy2MwxBuw4E/
    You can stop Cassandra via `launchctl stop homebrew.mxcl.cassandra`.
 5. Run `cassandra` to start Cassandra.
 6. Run `cqlsh` in your terminal. This confirms that Cassandra is running.
-7. Go to each folder in `agency`, and run each of the CQL scripts (do this by running the contents into the `cqlsh` terminal).
+7. Go to each folder in `agency`, and run each of the CQL scripts (do this by running the contents in the `cqlsh` terminal).
 8. Run `npm install`.
 9. Ensure restbus (https://github.com/trynmaps/restbus) is running.
 10. Run `npm start`. Remember to eventually stop this as otherwise Cassandra will eat all your memory. If that's the case, feel free to truncate the table.
 
 ## Linux
 
-TODO
+TODO (steps are the same as above except for when they're not)
