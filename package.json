@@ -19,6 +19,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "cassandra-driver": "^3.3.0",
+    "geolib": "^2.0.24",
     "lodash": "^4.17.4"
   }
 }
