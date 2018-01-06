@@ -1,4 +1,5 @@
 const axios = require('axios');
+const geolib = require('geolib');
 const addVehiclesToCassandra = require('../../vehicleUpdater');
 const config = require('../../config');
 const muniConfig = require('./muniConfig');
@@ -8,6 +9,19 @@ const muniConfig = require('./muniConfig');
  * We use our version of Restbus, which gets all the vehicles
  * https://github.com/trynmaps/restbus
  */
+
+let routes = {};
+function getMuniStops(routeId) {
+  return axios.get(`/agencies/sf-muni/routes/${routeId}`, {
+    baseURL: config.restbusURL
+  }).then((response) => {
+    const route = response.data;
+    routes[routeId] = route;
+    route.stops.forEach((stop) => {
+      stops[stop.id]
+    })
+  })
+}
 
 function updateMuniVehicles() {
   return axios.get('/agencies/sf-muni/vehicles', {
