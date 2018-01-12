@@ -37,7 +37,6 @@ launchctl start homebrew.mxcl.cassandra
 # launchctl stop homebrew.mxcl.cassandra
 ```
 ### Linux
-1. Install cassandra
 ```bash
 #Install Cassandra
 echo "deb http://www.apache.org/dist/cassandra/debian 311x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
