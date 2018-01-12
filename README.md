@@ -21,21 +21,46 @@ https://docs.google.com/document/d/1KTWRc4EO63_lDxjcp0mmprgrFPfFazWJEy2MwxBuw4E/
 - Pip
 - Python
 - Set up Restbus (https://github.com/trynmaps/restbus)
+- Cassandra 
+
+## Cassandra Installation
+
+### Mac
+```shell
+# Install Cassandra
+brew install cassandra
+
+# Start Cassandra Service
+launchctl start homebrew.mxcl.cassandra
+
+# To Stop Cassandra service and run
+# launchctl stop homebrew.mxcl.cassandra
+```
+### Linux
+1. Install cassandra
+```bash
+#Install Cassandra
+echo "deb http://www.apache.org/dist/cassandra/debian 311x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+sudo apt-get update
+sudo apt-get install cassandra
+
+# Start Cassandra Service
+sudo service cassandra start
+
+# Stop Cassandra Service
+# sudo service cassandra stop
+ ```
+
 
 ## Steps
 
 1. Clone this repo.
 2. Install cqlsh via `pip install cql`.
-3. Install Cassandra via `brew install cassandra`.
-4. Start Cassandra via `launchctl start homebrew.mxcl.cassandra`.
-   You can stop Cassandra via `launchctl stop homebrew.mxcl.cassandra`.
-5. Run `cassandra` to start Cassandra.
-6. Run `cqlsh` in your terminal. This confirms that Cassandra is running.
-7. Go to each folder in `agency`, and run each of the CQL scripts (do this by running the contents in the `cqlsh` terminal).
-8. Run `npm install`.
-9. Ensure restbus (https://github.com/trynmaps/restbus) is running.
-10. Run `npm start`. Remember to eventually stop this as otherwise Cassandra will eat all your memory. If that's the case, feel free to truncate the table.
+3. Run `cassandra` to start Cassandra.
+4. Run `cqlsh` in your terminal. This confirms that Cassandra is running.
+5. Go to each folder in `agency`, and run each of the CQL scripts (do this by running the contents in the `cqlsh` terminal).
+6. Run `npm install`.
+7. Ensure restbus (https://github.com/trynmaps/restbus) is running.
+8. Run `npm start`. Remember to eventually stop this as otherwise Cassandra will eat all your memory. If that's the case, feel free to truncate the table.
 
-## Linux
 
-TODO (steps are the same as above except for when they're not)
