@@ -62,13 +62,14 @@ const headingInDegrees = {
   NW: 315,
 };
 function makeOrionVehicleFromMarin(marinObject) {
-  const { ID, RouteId, Latitude, Longitude, Heading } = marinObject;
+  const { ID, RouteId, Latitude, Longitude, Heading, PatternID } = marinObject;
   return {
     rid: routeNames[RouteId],
     vid: String(ID),
     lat: Latitude,
     lon: Longitude,
     heading: headingInDegrees[Heading],
+    did: PatternID,
   };
 }
 

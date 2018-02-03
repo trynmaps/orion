@@ -15,5 +15,10 @@ CREATE TABLE marin.marin_realtime_vehicles (
     lat float,
     lon float,
     heading int,
+    did ascii,
 PRIMARY KEY ((vdate, vhour), vtime, rid, vid)
 );
+
+-- Adds Pattern ID
+
+ALTER TABLE marin.marin_realtime_vehicles ADD did ascii;
