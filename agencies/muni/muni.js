@@ -2,6 +2,7 @@ const axios = require('axios');
 const addVehiclesToCassandra = require('../../vehicleUpdater');
 const config = require('../../config');
 const muniConfig = require('./muniConfig');
+const nextbus = require('../../nextbus');
 
 /*
  * Muni uses the NextBus API
@@ -16,7 +17,7 @@ function updateMuniVehicles() {
     .then((response) => {
       const vehicles = response.data;
       console.log(vehicles);
-      return vehicles.map(makeOrionVehicleFromNextbus);
+      return vehicles.map(nextbus.makeOrionVehicleFromNextbus);
     })
     .then((vehicles) => {
       return addVehiclesToCassandra(
@@ -28,17 +29,6 @@ function updateMuniVehicles() {
     .catch((error) => {
       console.log(error);
     });
-}
-
-function makeOrionVehicleFromNextbus(nextbusObject) {
-  const { id, routeId, lat, lon, heading } = nextbusObject;
-  return {
-    rid: routeId,
-    vid: id,
-    lat,
-    lon,
-    heading,
-  };
 }
 
 module.exports = updateMuniVehicles;
