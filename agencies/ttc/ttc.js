@@ -3,6 +3,7 @@ const addVehiclesToCassandra = require('../../vehicleUpdater');
 const config = require('../../config');
 const ttcConfig = require('./ttcConfig');
 const nextbus = require('../../nextbus');
+const writeToS3 = require('../../s3Helper');
 
 /*
  * TTC uses the NextBus API
@@ -14,14 +15,10 @@ const nextbus = require('../../nextbus');
  * 
  */
 
-function updateTtcVehicles() {
-  return axios.get('/agencies/ttc/vehicles', {
-    baseURL: config.restbusURL
-  })
-    .then((response) => {
-      const vehicles = response.data;
-      console.log(vehicles);
-      return vehicles.map(nextbus.makeOrionVehicleFromNextbus);
+class TTC {
+  updateCassandraVehicles() {
+    return this.getTTCVehicles().then(vehicles => {
+      map(nextbus.makeOrionVehicleFromNextbus);
     })
     .then((vehicles) => {
       return addVehiclesToCassandra(
@@ -33,6 +30,28 @@ function updateTtcVehicles() {
     .catch((error) => {
       console.log(error);
     });
+  }
+
+  updateS3Vehicles(currentTime) {
+    return this.getTTCVehicles().then(
+      (vehicles) => this.saveTTCVehicles(vehicles, currentTime)
+    );
+  }
+
+  saveTTCVehicles(vehicles, currentTime) {
+    return writeToS3('ttc-nextbus-bucket', currentTime, vehicles);
+  }
+
+  getTTCVehicles() {
+    return axios.get('/agencies/ttc/vehicles', {
+      baseURL: config.restbusURL
+    })
+      .then((response) => {
+        const vehicles = response.data;
+        console.log(vehicles);
+        return vehicles;
+      });
+  }
 }
 
-module.exports = updateTtcVehicles;
+module.exports = TTC;

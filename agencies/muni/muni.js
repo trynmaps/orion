@@ -3,6 +3,7 @@ const addVehiclesToCassandra = require('../../vehicleUpdater');
 const config = require('../../config');
 const muniConfig = require('./muniConfig');
 const nextbus = require('../../nextbus');
+const writeToS3 = require('../../s3Helper');
 
 /*
  * Muni uses the NextBus API
@@ -10,16 +11,12 @@ const nextbus = require('../../nextbus');
  * https://github.com/trynmaps/restbus
  */
 
-function updateMuniVehicles() {
-  return axios.get('/agencies/sf-muni/vehicles', {
-    baseURL: config.restbusURL
-  })
-    .then((response) => {
-      const vehicles = response.data;
-      console.log(vehicles);
+class Muni {
+  updateCassandraVehicles() {
+    return this.getMuniVehicles().then(vehicles => {
       return vehicles.map(nextbus.makeOrionVehicleFromNextbus);
     })
-    .then((vehicles) => {
+    .then(vehicles => {
       return addVehiclesToCassandra(
         vehicles,
         muniConfig.keyspace,
@@ -29,6 +26,29 @@ function updateMuniVehicles() {
     .catch((error) => {
       console.log(error);
     });
-}
+  }
 
-module.exports = updateMuniVehicles;
+  updateS3Vehicles(currentTime) {
+    return this.getMuniVehicles().then(
+      (vehicles) => this.saveMuniVehicles(vehicles, currentTime)
+    );
+  }
+
+  saveMuniVehicles(vehicles, currentTime) {
+    if (!vehicles) console.log('bad');
+    return writeToS3('muni-nextbus-bucket', currentTime, vehicles);
+  }
+
+  getMuniVehicles() {
+    return axios.get('/agencies/sf-muni/vehicles', {
+      baseURL: config.restbusURL
+    })
+      .then((response) => {
+        const vehicles = response.data;
+        console.log(vehicles);
+        return vehicles;
+      });
+  }
+};
+
+module.exports = Muni;
