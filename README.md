@@ -37,14 +37,50 @@ launchctl start homebrew.mxcl.cassandra
 # launchctl stop homebrew.mxcl.cassandra
 ```
 ### Linux
+
+See https://cassandra.apache.org/download/ for up to date install instructions
+
+- Add the Apache repository of Cassandra to /etc/apt/sources.list.d/cassandra.sources.list, for example for the latest 3.11 version:
+
 ```bash
-#Install Cassandra
 echo "deb http://www.apache.org/dist/cassandra/debian 311x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+```
+
+- Add the Apache Cassandra repository keys:
+
+```bash
+curl https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
+```
+- Update the repositories:
+
+```bash
 sudo apt-get update
+```
+
+- If you encounter this error:
+
+```bash
+GPG error: http://www.apache.org 311x InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY A278B781FE4B2BDA
+```
+
+- Then add the public key A278B781FE4B2BDA as follows:
+
+```bash
+sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-key A278B781FE4B2BDA
+```
+
+- Then repeat `sudo apt-get update`
+- Then, install Cassandra
+
+```bash
 sudo apt-get install cassandra
+```
+
 
 # Start Cassandra Service
+```bash
 sudo service cassandra start
+```
 
 # Stop Cassandra Service
 # sudo service cassandra stop
