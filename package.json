@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "start-s3": "node realtimeTransitToS3.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,8 +18,10 @@
   },
   "homepage": "https://github.com/EddyIonescu/orion#readme",
   "dependencies": {
+    "aws-sdk": "^2.238.1",
     "axios": "^0.16.2",
     "cassandra-driver": "^3.3.0",
+    "fs": "0.0.1-security",
     "lodash": "^4.17.4"
   }
 }

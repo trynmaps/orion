@@ -2,6 +2,7 @@ const _ = require('lodash');
 const axios = require('axios');
 const addVehiclesToCassandra = require('../../vehicleUpdater');
 const marinConfig = require('./marinConfig');
+const writeToS3 = require('../../s3Helper');
 
 /*
  * Marin API requires us to get all their routes,
@@ -18,38 +19,6 @@ const marinConfig = require('./marinConfig');
  */
 
 const routeNames = {}
-function updateMarinVehicles() {
-  return axios.get('/Region/0/Routes', {
-    baseURL: marinConfig.baseURL
-  })
-    .then((response) => {
-      const routes = response.data;
-      return Promise.all(
-        routes.map((route) => {
-          routeNames[route.ID] = route.Name;
-          return axios.get(`/Route/${route.ID}/Vehicles`, {
-            baseURL: marinConfig.baseURL
-          }).then((response) => {
-            return response.data;
-          });
-        })
-      );
-    })
-    .then((vehicles) => {
-      console.log(vehicles);
-      return _.flatten(vehicles).map(makeOrionVehicleFromMarin);
-    })
-    .then((vehicles) => {
-      return addVehiclesToCassandra(
-        vehicles,
-        marinConfig.keyspace,
-        marinConfig.vehicleTable,
-      );
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
 
 const headingInDegrees = {
   N: 0,
@@ -61,16 +30,65 @@ const headingInDegrees = {
   W: 270,
   NW: 315,
 };
-function makeOrionVehicleFromMarin(marinObject) {
-  const { ID, RouteId, Latitude, Longitude, Heading, PatternId } = marinObject;
-  return {
-    rid: routeNames[RouteId],
-    vid: String(ID),
-    lat: Latitude,
-    lon: Longitude,
-    heading: headingInDegrees[Heading],
-    did: String(PatternId),
-  };
-}
 
-module.exports = updateMarinVehicles;
+class Marin {
+  updateCassandraVehicles() {
+      this.getMarinVehicles().then(vehicles => {
+        console.log(vehicles);
+        return _.flatten(vehicles).map(this.makeOrionVehicleFromMarin);
+      })
+      .then((vehicles) => {
+        return addVehiclesToCassandra(
+          vehicles,
+          marinConfig.keyspace,
+          marinConfig.vehicleTable,
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  updateS3Vehicles(currentTime) {
+    return this.getMarinVehicles().then(
+      (vehicles) => this.saveMarinVehicles(vehicles, currentTime)
+    );
+  }
+
+  saveMarinVehicles(vehicles, currentTime) {
+    return writeToS3('marin-transit-bucket', currentTime, vehicles);
+  }
+
+  getMarinVehicles() {
+    return axios.get('/Region/0/Routes', {
+      baseURL: marinConfig.baseURL
+    })
+      .then((response) => {
+        const routes = response.data;
+        return Promise.all(
+          routes.map((route) => {
+            routeNames[route.ID] = route.Name;
+            return axios.get(`/Route/${route.ID}/Vehicles`, {
+              baseURL: marinConfig.baseURL
+            }).then((response) => {
+              return response.data;
+            });
+          })
+        );
+      });
+  }
+
+  makeOrionVehicleFromMarin(marinObject) {
+    const { ID, RouteId, Latitude, Longitude, Heading, PatternId } = marinObject;
+    return {
+      rid: routeNames[RouteId],
+      vid: String(ID),
+      lat: Latitude,
+      lon: Longitude,
+      heading: headingInDegrees[Heading],
+      did: PatternId,
+    };
+  }
+};
+
+module.exports = Marin;

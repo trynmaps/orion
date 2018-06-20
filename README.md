@@ -11,7 +11,11 @@ Many TTC buses are of the Orion VII Model while Orion was also a giant huntsman 
 See our welcome doc for contribution and deployment guidelines.
 https://docs.google.com/document/d/1KTWRc4EO63_lDxjcp0mmprgrFPfFazWJEy2MwxBuw4E/edit?usp=sharing
 
-## MacOS
+## Usage
+
+Running 15-second batch to Cassandra: `npm start`
+
+Running 15-second batch to S3: `npm run start-s3`
 
 ## Prerequisites
 
@@ -49,7 +53,6 @@ sudo service cassandra start
 # Stop Cassandra Service
 # sudo service cassandra stop
  ```
-
 
 ## Steps
 

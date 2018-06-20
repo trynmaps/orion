@@ -13,7 +13,10 @@ COPY . .
 # Use prod-config, comment out to use local env config
 COPY prod-config.json ./config.json
 
-CMD [ "npm", "start" ]
+# Google Cloud to Cassandra Version
+# CMD [ "npm", "start" ]
+# AWS to S3 Version
+CMD [ "npm", "run", "start-s3" ]
 
 # Build
 # docker build -t orion .
