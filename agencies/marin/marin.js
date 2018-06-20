@@ -79,14 +79,14 @@ class Marin {
   }
 
   makeOrionVehicleFromMarin(marinObject) {
-    const { ID, RouteId, Latitude, Longitude, Heading, PatternID } = marinObject;
+    const { ID, RouteId, Latitude, Longitude, Heading, PatternId } = marinObject;
     return {
       rid: routeNames[RouteId],
       vid: String(ID),
       lat: Latitude,
       lon: Longitude,
       heading: headingInDegrees[Heading],
-      did: PatternID,
+      did: PatternId,
     };
   }
 };

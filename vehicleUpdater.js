@@ -6,10 +6,10 @@ function addVehiclesToCassandra(vehicles, keyspace, table) {
   const vdate = vtime.toISOString().slice(0, 10);
   const queries = vehicles
     .map(vehicle => {
-      const { rid, vid, lat, lon, heading } = vehicle;
-      return rid, vid, lat, lon, heading && {
-        query: `INSERT INTO ${keyspace}.${table} (vdate, vhour, rid, vid, vtime, lat, lon, heading) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        params: [vdate, vhour, rid, vid, vtime, lat, lon, heading],
+      const { rid, vid, lat, lon, did, heading } = vehicle;
+      return rid, vid, lat, lon, did, heading && {
+        query: `INSERT INTO ${keyspace}.${table} (vdate, vhour, rid, vid, vtime, lat, lon, did, heading) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        params: [vdate, vhour, rid, vid, vtime, lat, lon, did, heading],
       };
     })
     .filter(vehicle => vehicle);
