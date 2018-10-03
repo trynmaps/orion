@@ -4,5 +4,6 @@
   "keyspace": "muni",
   "vehicleTable": "muni_realtime_vehicles",
   "stopStateTable": "muni_stop_states",
-  "model": "muniTable.cql"
+  "model": "muniTable.cql",
+  "timeZone": "US/Pacific"
 }

@@ -4,5 +4,6 @@
   "vehicleTable": "marin_realtime_vehicles",
   "stopStateTable": "marin_stop_states",
   "model": "marinTable.cql",
-  "baseURL": "https://marintransit.net"
+  "baseURL": "https://marintransit.net",
+  "timeZone": "US/Pacific"
 }

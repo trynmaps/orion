@@ -4,5 +4,6 @@
   "keyspace": "ttc",
   "vehicleTable": "ttc_realtime_vehicles",
   "stopStateTable": "ttc_stop_states",
-  "model": "ttcTable.cql"
+  "model": "ttcTable.cql",
+  "timeZone": "US/Eastern"
 }

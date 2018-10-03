@@ -18,7 +18,7 @@ const writeToS3 = require('../../s3Helper');
 class TTC {
   updateCassandraVehicles() {
     return this.getTTCVehicles().then(vehicles => {
-      map(nextbus.makeOrionVehicleFromNextbus);
+      return vehicles.map(vehicle => nextbus.makeOrionVehicleFromNextbus(vehicle));
     })
     .then((vehicles) => {
       return addVehiclesToCassandra(
@@ -39,7 +39,15 @@ class TTC {
   }
 
   saveTTCVehicles(vehicles, currentTime) {
-    return writeToS3('ttc-nextbus-bucket', currentTime, vehicles);
+    return Promise.all([
+      writeToS3('ttc', currentTime, vehicles, true),
+      writeToS3(
+        'ttc',
+        currentTime,
+        vehicles.map(vehicle => nextbus.makeOrionVehicleFromNextbus(vehicle)),
+        false,
+      ),
+    ]);
   }
 
   getTTCVehicles() {

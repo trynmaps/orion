@@ -35,7 +35,7 @@ class Marin {
   updateCassandraVehicles() {
       this.getMarinVehicles().then(vehicles => {
         console.log(vehicles);
-        return _.flatten(vehicles).map(this.makeOrionVehicleFromMarin);
+        return _.flatten(vehicles).map(vehicle => this.makeOrionVehicleFromMarin(vehicle));
       })
       .then((vehicles) => {
         return addVehiclesToCassandra(
@@ -56,7 +56,15 @@ class Marin {
   }
 
   saveMarinVehicles(vehicles, currentTime) {
-    return writeToS3('marin-transit-bucket', currentTime, vehicles);
+    return Promise.all([
+      writeToS3('marin-transit', currentTime, vehicles, true),
+      writeToS3(
+        'marin-transit',
+        currentTime,
+        _.flatten(vehicles).map(vehicle => this.makeOrionVehicleFromMarin(vehicle)),
+        false,
+      )
+    ]);
   }
 
   getMarinVehicles() {

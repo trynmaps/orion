@@ -14,7 +14,7 @@ const writeToS3 = require('../../s3Helper');
 class Muni {
   updateCassandraVehicles() {
     return this.getMuniVehicles().then(vehicles => {
-      return vehicles.map(nextbus.makeOrionVehicleFromNextbus);
+      return vehicles.map(vehicle => nextbus.makeOrionVehicleFromNextbus(vehicle));
     })
     .then(vehicles => {
       return addVehiclesToCassandra(
@@ -35,8 +35,17 @@ class Muni {
   }
 
   saveMuniVehicles(vehicles, currentTime) {
-    if (!vehicles) console.log('bad');
-    return writeToS3('muni-nextbus-bucket', currentTime, vehicles);
+    return Promise.all([
+      // raw response
+      writeToS3('muni', currentTime, vehicles, true),
+      // orion vehicle format
+      writeToS3(
+        'muni',
+        currentTime,
+        vehicles.map(vehicle => nextbus.makeOrionVehicleFromNextbus(vehicle)),
+        false,
+      ),
+    ]);
   }
 
   getMuniVehicles() {
