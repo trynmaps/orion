@@ -2,9 +2,9 @@ const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 
 const config = require('./config');
-AWS.config.loadFromPath('./prod-s3.json');
 
 function writeToS3(agency, currentTime, data, isRaw) {
+  AWS.config.loadFromPath('./prod-s3.json');
   // TODO - in the future, gzip isRaw files
   const currentDateTime = new Date(currentTime);
   const year = currentDateTime.getUTCFullYear();
