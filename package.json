@@ -22,6 +22,7 @@
     "axios": "^0.16.2",
     "cassandra-driver": "^3.3.0",
     "fs": "0.0.1-security",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "zlib": "^1.0.5"
   }
 }
