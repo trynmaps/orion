@@ -36,13 +36,13 @@ const endEpoch = 1539475200000;
 
     // group by vtime, each vtime is its own file
     const vtimeToVehicles = {}
-    for(vehicle in vehicles) {
+    vehicles.forEach(vehicle => {
       if (vtimeToVehicles[vehicle.vtime]) {
         vtimeToVehicles[vehicle.vtime].push(vehicle); 
-        continue;
+        return;
       }
       vtimeToVehicles[vehicle.vtime] = [];
-    }
+    });
     return Promise.all(Object.keys(vtimeToVehicles).map(vtime => {
       return writeToS3(
         agency,
