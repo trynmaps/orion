@@ -37,7 +37,7 @@ const endEpoch = 1539475200000;
       }
       vtimeToVehicles[vehicle.vtime] = [];
     }
-    await Promise.all(vtimeToVehicles.map(vtime => {
+    await Promise.all(Object.keys(vtimeToVehicles).map(vtime => {
       return writeToS3(
         agency,
         vtime,
