@@ -13,7 +13,6 @@ function compressData(data) {
 }
 
 function writeToS3(agency, currentTime, data, isRaw) {
-  // TODO - in the future, gzip isRaw files
   const currentDateTime = new Date(currentTime);
   const year = currentDateTime.getUTCFullYear();
   const month = currentDateTime.getUTCMonth()+1;

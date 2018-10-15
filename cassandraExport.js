@@ -30,7 +30,7 @@ const endEpoch = 1539475200000;
     const vehicles = _.flatten(responses.map(({rows}) => rows)).map(vehicle => {
       return {
         ...vehicle,
-        vtime: vehicle.vtime.getTime(),
+        vtime: Number(vehicle.vtime.getTime()),
       };
     });
 
