@@ -11,9 +11,7 @@ const endEpoch = 1539475200000;
 
 ['muni', 'ttc', 'marin'].map(async agency => {
   for (time = startEpoch; time <= endEpoch; time += 1000 * 60 * 5) {
-    // every 5 minute
-    console.log(`${agency} - ${time}`);
-    console.log(`${(time - startEpoch) / (endEpoch - startEpoch) * 100}%`);
+    // every 5 minutes
   
     // this block ripped off from API resolver
     const primaryKeys = getPrimaryKeys(time, time + 1000 * 60 * 5);
@@ -45,6 +43,8 @@ const endEpoch = 1539475200000;
         false,
       );
     }));
+    console.log(`${agency} - ${time}`);
+    console.log(`${(time - startEpoch) / (endEpoch - startEpoch) * 100}%`);
   }
 });
 
