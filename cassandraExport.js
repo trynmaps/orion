@@ -35,16 +35,17 @@ const endEpoch = 1539475200000;
       }
       vtimeToVehicles[vehicle.vtime] = [];
     }
-    const x = await Promise.all(Object.keys(vtimeToVehicles).map(vtime => {
+    Promise.all(Object.keys(vtimeToVehicles).map(vtime => {
       return writeToS3(
         agency,
         vtime,
         vtimeToVehicles[vtime],
         false,
       );
-    }));
-    console.log(`${agency} - ${time}`);
-    console.log(`${(time - startEpoch) / (endEpoch - startEpoch) * 100}%`);
+    })).then(() => {
+      console.log(`${agency} - ${time}`);
+      console.log(`${(time - startEpoch) / (endEpoch - startEpoch) * 100}%`);
+    });
   }
 });
 
