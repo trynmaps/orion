@@ -3,8 +3,8 @@ var zlib = require('zlib');
 
 const config = require('./config');
 
-const s3 = new AWS.S3();
 AWS.config.loadFromPath('./prod-s3.json');
+const s3 = new AWS.S3();
 
 function compressData(data) {
   return new Promise((resolve, _) => {
