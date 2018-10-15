@@ -27,7 +27,12 @@ const endEpoch = 1539475200000;
         [vdate, vhour, new Date(time - 1000), new Date(time + 1000 * 60 * 5)],
     )));
     // vehicles are clustered by primary key - so put them into the same list
-    const vehicles = _.flatten(responses.map(({rows}) => rows));
+    const vehicles = _.flatten(responses.map(({rows}) => rows)).map(vehicle => {
+      return {
+        ...vehicle,
+        vtime: vehicle.vtime.getTime(),
+      };
+    });
 
     // group by vtime, each vtime is its own file
     const vtimeToVehicles = {}
