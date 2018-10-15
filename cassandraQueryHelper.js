@@ -1,5 +1,5 @@
 const cassandra = require('cassandra-driver');
-const config = require('../config');
+const config = require('./config');
 
 const client = new cassandra.Client({
     contactPoints: [config.cassandraURL],
