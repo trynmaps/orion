@@ -48,7 +48,7 @@ const endEpoch = 1539475200000;
     })).then(() => {
       console.log(`${agency} - ${time}`);
       console.log(`${(time - startEpoch) / (endEpoch - startEpoch) * 100}%`);
-      cassandraExport(time + 1000 * 60 * 5, endEpoch);
+      return cassandraExport(time + 1000 * 60 * 5, endEpoch);
     });
   }
 });
