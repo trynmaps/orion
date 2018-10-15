@@ -1,4 +1,5 @@
 const writeToS3 = require('./s3Helper');
+const executeQuery = require('./helpers/cassandraQueryHelper');
 const getPrimaryKeys = require('./getPrimaryKeys');
 
 // Export vehicles from Cassandra to S3 store
