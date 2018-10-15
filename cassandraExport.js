@@ -30,7 +30,7 @@ const endEpoch = 1539475200000;
     const vehicles = _.flatten(responses.map(({rows}) => rows)).map(vehicle => {
       return {
         ...vehicle,
-        vtime: Number(vehicle.vtime.getTime()),
+        vtime: vehicle.vtime.getTime(),
       };
     });
 
@@ -46,7 +46,7 @@ const endEpoch = 1539475200000;
     return Promise.all(Object.keys(vtimeToVehicles).map(vtime => {
       return writeToS3(
         agency,
-        vtime,
+        Number(vtime), // being a map key casts it to a string
         vtimeToVehicles[vtime],
         false,
       );
