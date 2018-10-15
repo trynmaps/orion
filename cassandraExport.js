@@ -14,7 +14,7 @@ const endEpoch = 1539475200000;
     console.log(`${(time - startEpoch) / (endEpoch - startEpoch) * 100}%`);
   
     // this block ripped off from API resolver
-    const primaryKeys = getPrimaryKeys(startTime, endTime);
+    const primaryKeys = getPrimaryKeys(time, time);
     // TODO - get these from config file using agency name
     const keyspace = agency;
     const vehicleTableName = `${agency}_realtime_vehicles`;
