@@ -10,19 +10,19 @@ const endEpoch = 1539475200000;
 
 ['muni', 'ttc', 'marin'].map(async agency => {
   for (time = startEpoch; time <= endEpoch; time += 1000 * 60 * 5) {
-    // every 5 minutes
+    // every 5 minute
     console.log(`${agency} - ${time}`);
     console.log(`${(time - startEpoch) / (endEpoch - startEpoch) * 100}%`);
   
     // this block ripped off from API resolver
-    const primaryKeys = getPrimaryKeys(time, time);
+    const primaryKeys = getPrimaryKeys(time, time + 1000 * 60 * 5);
     // TODO - get these from config file using agency name
     const keyspace = agency;
     const vehicleTableName = `${agency}_realtime_vehicles`;
     const responses = await Promise.all(primaryKeys.map(({vdate, vhour}) =>
         executeQuery(
         `SELECT * FROM ${keyspace}.${vehicleTableName} WHERE vdate = ? AND vhour = ? AND vtime > ? AND vtime < ?`,
-        [vdate, vhour, new Date(startTime), new Date(endTime)],
+        [vdate, vhour, new Date(time - 1000), new Date(time + 1000 * 60 * 5)],
     )));
     // vehicles are clustered by primary key - so put them into the same list
     const vehicles = _.flatten(responses.map(({rows}) => rows));
