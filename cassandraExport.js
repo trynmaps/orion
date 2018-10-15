@@ -10,9 +10,12 @@ const startEpoch = 1506816000000;
 const endEpoch = 1539475200000;
 
 ['muni', 'ttc', 'marin'].map(async agency => {
-  for (time = startEpoch; time <= endEpoch; time += 1000 * 60 * 5) {
-    // every 5 minutes
-  
+  cassandraExport(startEpoch, endEpoch);
+
+  async function cassandraExport(time, endEpoch) {
+    if (time > endEpoch) {
+      return;
+    }
     // this block ripped off from API resolver
     const primaryKeys = getPrimaryKeys(time, time + 1000 * 60 * 5);
     // TODO - get these from config file using agency name
@@ -35,7 +38,7 @@ const endEpoch = 1539475200000;
       }
       vtimeToVehicles[vehicle.vtime] = [];
     }
-    Promise.all(Object.keys(vtimeToVehicles).map(vtime => {
+    return Promise.all(Object.keys(vtimeToVehicles).map(vtime => {
       return writeToS3(
         agency,
         vtime,
@@ -45,6 +48,7 @@ const endEpoch = 1539475200000;
     })).then(() => {
       console.log(`${agency} - ${time}`);
       console.log(`${(time - startEpoch) / (endEpoch - startEpoch) * 100}%`);
+      cassandraExport(time + 1000 * 60 * 5, endEpoch);
     });
   }
 });
