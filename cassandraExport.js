@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const writeToS3 = require('./s3Helper');
 const executeQuery = require('./cassandraQueryHelper');
 const getPrimaryKeys = require('./getPrimaryKeys');
