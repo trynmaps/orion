@@ -8,7 +8,7 @@ module.exports = {
       lon,
       heading,
       did: directionId,
-      secsSinceReport: secsSinceReport
+      secsSinceReport,
     };
   },
 }
