@@ -1,6 +1,6 @@
 module.exports = {
   makeOrionVehicleFromNextbus: function(nextbusObject) {
-    const { id, routeId, lat, lon, heading, directionId } = nextbusObject;
+    const { id, routeId, lat, lon, heading, directionId, secsSinceReport } = nextbusObject;
     return {
       rid: routeId,
       vid: id,
@@ -8,6 +8,7 @@ module.exports = {
       lon,
       heading,
       did: directionId,
+      secsSinceReport,
     };
   },
 }
