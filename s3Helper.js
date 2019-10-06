@@ -1,9 +1,6 @@
 const AWS = require('aws-sdk');
 var zlib = require('zlib');
 
-const config = require('./config');
-
-AWS.config.loadFromPath('./prod-s3.json');
 const s3 = new AWS.S3();
 
 function compressData(data) {
@@ -12,7 +9,7 @@ function compressData(data) {
   });
 }
 
-function writeToS3(agency, currentTime, data, isRaw) {
+function writeToS3(agency, currentTime, data) {
   const currentDateTime = new Date(currentTime);
   const year = currentDateTime.getUTCFullYear();
   const month = currentDateTime.getUTCMonth()+1;
@@ -20,22 +17,30 @@ function writeToS3(agency, currentTime, data, isRaw) {
   const hour = currentDateTime.getUTCHours();
   const minute = currentDateTime.getUTCMinutes();
   const second = currentDateTime.getUTCSeconds();
+  const s3Bucket = process.env.ORION_S3_BUCKET;
+  const s3Key = `${agency}/${year}/${month}/${day}/${hour}/${minute}/${second}/${agency}-${currentTime}.json.gz`;
+
+  console.log(`writing s3://${s3Bucket}/${s3Key}`);
+
   return compressData(data).then(encodedData => {
     return new Promise((resolve, reject) => {
       s3.putObject({
-        Bucket: `${isRaw ? "orion-raw" : "orion-vehicles"}${config.dev ? "-dev" : ""}`,
-        Key: `${agency}/${year}/${month}/${day}/${hour}/${minute}` + 
-          `/${second}/${agency}-${currentTime}.json.gz`,
+        Bucket: s3Bucket,
+        Key: s3Key,
         Body: encodedData,
-        ContentType: "text/plain",
+        ContentType: "application/json",
         ContentEncoding: "gzip",
       }, (err, res) => {
-        if (err) reject(err);
-        resolve(res);
+        if (err) {
+          reject(err);
+        } else {
+          resolve(res);
+        }
       });
     });
   });
 };
 
-
-module.exports = writeToS3;
+module.exports = {
+    writeToS3
+};

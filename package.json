@@ -1,26 +1,24 @@
 {
   "name": "orion",
-  "version": "1.0.2",
-  "description": "Finds realtime transit data and sends it to Cassandra",
+  "version": "1.1.0",
+  "description": "Finds realtime transit data and sends it to S3",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "start-s3": "node realtimeTransitToS3.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EddyIonescu/orion.git"
+    "url": "git+https://github.com/trynmaps/orion.git"
   },
   "author": "Eddy",
   "bugs": {
-    "url": "https://github.com/EddyIonescu/orion/issues"
+    "url": "https://github.com/trynmaps/orion/issues"
   },
-  "homepage": "https://github.com/EddyIonescu/orion#readme",
+  "homepage": "https://github.com/trynmaps/orion#readme",
   "dependencies": {
     "aws-sdk": "^2.238.1",
     "axios": "^0.16.2",
-    "cassandra-driver": "^3.3.0",
     "fs": "0.0.1-security",
     "zlib": "^1.0.5"
   },

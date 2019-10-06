@@ -1,5 +1,0 @@
-{
-    "restbusURL": "http://127.0.0.1:3535",
-    "cassandraURL": "127.0.0.1:9042",
-    "dev": true
-}

@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  orion-dev:
+    container_name: orion-dev
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - .:/usr/src/app
