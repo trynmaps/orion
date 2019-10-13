@@ -20,9 +20,9 @@ The config JSON should be an object containing the following properties:
 `s3_bucket` - The name of the S3 bucket where transit data will be written.
 
 `agencies` - An array containing an object for each transit agency. Each object in the agencies array should have the following properties:
-    * `id` - The ID of the transit agency, which will appear in the S3 keys written to `ORION_S3_BUCKET`.
-    * `provider` - The module name in the providers directory (e.g. 'nextbus') which provides an API for real-time vehicle locations.
-    * Any custom properties specific to the provider, prefixed by the provider name (e.g. IDs or API keys)
+* `id` - The ID of the transit agency, which will appear in the S3 keys written to the S3 bucket.
+* `provider` - The module name in the providers directory (e.g. 'nextbus') which provides an API for real-time vehicle locations.
+* Any custom properties specific to the provider, prefixed by the provider name (e.g. IDs or API keys)
 
 Orion writes data to S3 using the AWS credentials from the default locations, e.g. a credentials file located within the Docker container at /root/.aws/credentials (using the default profile or a profile named by AWS_PROFILE), or using the environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.
 
