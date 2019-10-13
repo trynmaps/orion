@@ -1,7 +1,11 @@
 const axios = require('axios');
 
-function getVehicles(nextbusAgencyId) {
-    const url = 'http://webservices.nextbus.com/service/publicJSONFeed?command=vehicleLocations&t=0&a='+nextbusAgencyId;
+function getVehicles(config) {
+    if (!config.nextbus_agency_id) {
+      throw new Error("nextbus config missing nextbus_agency_id");
+    }
+
+    const url = 'http://webservices.nextbus.com/service/publicJSONFeed?command=vehicleLocations&t=0&a='+config.nextbus_agency_id;
     console.log('fetching vehicles from ' + url);
     return axios.get(url)
         .then((response) => {

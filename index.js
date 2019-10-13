@@ -1,32 +1,62 @@
 const axios = require('axios');
+const fs = require('fs');
 const s3Helper = require('./s3Helper');
 
 const interval = 15000; // ms
 
-var providerId = process.env.ORION_PROVIDER;
+const configPath = process.env.ORION_CONFIG_PATH;
+const configJson = process.env.ORION_CONFIG_JSON;
 
-if (!providerId) {
-    throw new Error("Missing ORION_PROVIDER environment variable");
+if (!configJson && !configPath) {
+    throw new Error("Missing ORION_CONFIG_JSON or ORION_CONFIG_PATH environment variable");
 }
 
-console.log("Provider: " + providerId);
+let config;
+if (configJson) {
+    console.log("reading config from ORION_CONFIG_JSON");
+    config = JSON.parse(configJson);
+} else {
+    console.log("reading config from " + configPath);
+    config = JSON.parse(fs.readFileSync(configPath));
+}
 
-var providerIds = [
+if (!config || !config.agencies || !config.agencies.length) {
+    throw new Error("No agencies specified in config.");
+}
+
+if (!config.s3_bucket) {
+    throw new Error("No s3_bucket specified in config.");
+}
+
+const providerNames = [
     'nextbus',
     'marin',
 ];
 
-if (!providerIds.includes(providerId)) {
-    throw new Error("Invalid provider: " + providerId);
-}
+const s3Bucket = config.s3_bucket;
+console.log("S3 bucket: " + s3Bucket);
 
-const provider = require('./providers/' + providerId);
-const agencyId = process.env.ORION_AGENCY_ID;
-const providerAgencyId = process.env.ORION_PROVIDER_AGENCY_ID;
+var agenciesInfo = config.agencies.map((agencyConfig) => {
+    const providerName = agencyConfig.provider;
+    if (!providerNames.includes(providerName)) {
+        throw new Error("Invalid provider: " + providerName);
+    }
 
-console.log("Provider agency id: " + providerAgencyId);
-console.log("OpenTransit agency id: " + agencyId);
-console.log("S3 bucket: " + process.env.ORION_S3_BUCKET);
+    const provider = require('./providers/' + providerName);
+
+    const agencyId = agencyConfig.id;
+    if (!agencyId) {
+        throw new Error("Agency missing id");
+    }
+
+    console.log("Agency: " + agencyId + " (" + providerName + ")");
+
+    return {
+        provider: provider,
+        id: agencyId,
+        config: agencyConfig
+    };
+});
 
 // wait until the next multiple of 15 seconds
 setTimeout(function() {
@@ -37,11 +67,15 @@ setTimeout(function() {
 function saveVehicles() {
   const currentTime = Date.now();
 
-  provider.getVehicles(providerAgencyId)
-    .then((vehicles) => {
-        return s3Helper.writeToS3(agencyId, currentTime, vehicles);
-    })
-    .catch((err) => {
+  const promises = agenciesInfo.map((agencyInfo) => {
+    return agencyInfo.provider.getVehicles(agencyInfo.config)
+      .then((vehicles) => {
+        return s3Helper.writeToS3(s3Bucket, agencyInfo.id, currentTime, vehicles);
+      })
+      .catch((err) => {
         console.log(err);
-    });
+      });
+  });
+
+  Promise.all(promises);
 }

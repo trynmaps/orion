@@ -13,17 +13,16 @@ https://docs.google.com/document/d/1KTWRc4EO63_lDxjcp0mmprgrFPfFazWJEy2MwxBuw4E/
 
 ## Usage
 
-Each instance of orion can fetch data from one transit agency at a time. To fetch data for multiple agencies at once, run multiple instances of orion.
+Orion is configured via JSON stored in the `ORION_CONFIG_JSON` environment variable, or a file located at the path in the `ORION_CONFIG_PATH` environment variable.
 
-Orion is configured via environment variables.
+The config JSON should be an object containing the following properties:
 
-`ORION_S3_BUCKET`: The name of the S3 bucket where transit data will be written.
+`s3_bucket` - The name of the S3 bucket where transit data will be written.
 
-`ORION_AGENCY_ID`: The ID of the transit agency, which will appear in the S3 keys written to `ORION_S3_BUCKET`.
-
-`ORION_PROVIDER`: The module name in the providers directory (e.g. 'nextbus') which provides an API for real-time vehicle locations.
-
-`ORION_PROVIDER_AGENCY_ID`: The ID of the transit agency as used by the provider (not needed if the provider only supports one transit agency).
+`agencies` - An array containing an object for each transit agency. Each object in the agencies array should have the following properties:
+    * `id` - The ID of the transit agency, which will appear in the S3 keys written to `ORION_S3_BUCKET`.
+    * `provider` - The module name in the providers directory (e.g. 'nextbus') which provides an API for real-time vehicle locations.
+    * Any custom properties specific to the provider, prefixed by the provider name (e.g. IDs or API keys)
 
 Orion writes data to S3 using the AWS credentials from the default locations, e.g. a credentials file located within the Docker container at /root/.aws/credentials (using the default profile or a profile named by AWS_PROFILE), or using the environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.
 
@@ -37,10 +36,26 @@ services:
       - ../.aws:/root/.aws
     environment:
       AWS_PROFILE: "default"
-      ORION_S3_BUCKET: "my-opentransit-data" # assumes you created this S3 bucket in the AWS console
-      ORION_AGENCY_ID: "muni"
-      ORION_PROVIDER: "nextbus"
-      ORION_PROVIDER_AGENCY_ID: "sf-muni"
+      ORION_CONFIG_JSON: >
+        {
+         "s3_bucket": "my-opentransit-bucket",
+         "agencies": [
+           {
+             "id": "muni",
+             "provider": "nextbus",
+             "nextbus_agency_id": "sf-muni"
+           },
+           {
+             "id": "ttc",
+             "provider": "nextbus",
+             "nextbus_agency_id": "ttc"
+           },
+           {
+             "id": "marin",
+             "provider": "marin"
+           }
+         ]
+        }
 ```
 
 To test, run `docker-compose up`.

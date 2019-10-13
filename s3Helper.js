@@ -9,7 +9,7 @@ function compressData(data) {
   });
 }
 
-function writeToS3(agency, currentTime, data) {
+function writeToS3(s3Bucket, agency, currentTime, data) {
   const currentDateTime = new Date(currentTime);
   const year = currentDateTime.getUTCFullYear();
   const month = currentDateTime.getUTCMonth()+1;
@@ -17,7 +17,6 @@ function writeToS3(agency, currentTime, data) {
   const hour = currentDateTime.getUTCHours();
   const minute = currentDateTime.getUTCMinutes();
   const second = currentDateTime.getUTCSeconds();
-  const s3Bucket = process.env.ORION_S3_BUCKET;
   const s3Key = `${agency}/${year}/${month}/${day}/${hour}/${minute}/${second}/${agency}-${currentTime}.json.gz`;
 
   console.log(`writing s3://${s3Bucket}/${s3Key}`);

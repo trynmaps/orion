@@ -21,19 +21,32 @@ spec:
       containers:
       - image: gcr.io/poetic-genius-233804/orion:latest
         imagePullPolicy: IfNotPresent
-        name: orion-1
+        name: orion
         resources:
           requests:
             cpu: 0.03
         env:
-          - name: ORION_S3_BUCKET
-            value: "orion-vehicles"
-          - name: ORION_AGENCY_ID
-            value: "muni"
-          - name: ORION_PROVIDER
-            value: "nextbus"
-          - name: ORION_PROVIDER_AGENCY_ID
-            value: "sf-muni"
+          - name: ORION_CONFIG_JSON
+            value: >
+              {
+                 "s3_bucket": "orion-vehicles",
+                 "agencies": [
+                   {
+                     "id": "muni",
+                     "provider": "nextbus",
+                     "nextbus_agency_id": "sf-muni"
+                   },
+                   {
+                     "id": "ttc",
+                     "provider": "nextbus",
+                     "nextbus_agency_id": "ttc"
+                   },
+                   {
+                     "id": "marin",
+                     "provider": "marin"
+                   }
+                 ]
+              }
           - name: AWS_ACCESS_KEY_ID
             valueFrom:
               secretKeyRef:

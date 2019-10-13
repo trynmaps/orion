@@ -30,7 +30,7 @@ const headingInDegrees = {
 
 const marinBaseUrl = "https://marintransit.net";
 
-function getVehicles() {
+function getVehicles(/* config */) {
     return axios.get('/Region/0/Routes', {
       baseURL: marinBaseUrl
     })
