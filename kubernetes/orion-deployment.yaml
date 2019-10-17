@@ -1,0 +1,59 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: orion
+  name: orion
+spec:
+  selector:
+    matchLabels:
+      run: orion
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: orion
+    spec:
+      containers:
+      - image: gcr.io/poetic-genius-233804/orion:latest
+        imagePullPolicy: IfNotPresent
+        name: orion
+        resources:
+          requests:
+            cpu: 0.03
+        env:
+          - name: ORION_CONFIG_JSON
+            value: >
+              {
+                 "s3_bucket": "orion-vehicles",
+                 "agencies": [
+                   {
+                     "id": "muni",
+                     "provider": "nextbus",
+                     "nextbus_agency_id": "sf-muni"
+                   },
+                   {
+                     "id": "ttc",
+                     "provider": "nextbus",
+                     "nextbus_agency_id": "ttc"
+                   },
+                   {
+                     "id": "marin",
+                     "provider": "marin"
+                   }
+                 ]
+              }
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: aws-credentials
+                key: aws_access_key_id
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: aws-credentials
+                key: aws_secret_access_key

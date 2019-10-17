@@ -1,9 +1,0 @@
-{
-  "name": "ttc",
-  "nextbusName": "ttc",
-  "keyspace": "ttc",
-  "vehicleTable": "ttc_realtime_vehicles",
-  "stopStateTable": "ttc_stop_states",
-  "model": "ttcTable.cql",
-  "timeZone": "US/Eastern"
-}
