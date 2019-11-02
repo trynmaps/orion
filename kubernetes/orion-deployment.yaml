@@ -27,26 +27,10 @@ spec:
             cpu: 0.03
         env:
           - name: ORION_CONFIG_JSON
-            value: >
-              {
-                 "s3_bucket": "orion-vehicles",
-                 "agencies": [
-                   {
-                     "id": "muni",
-                     "provider": "nextbus",
-                     "nextbus_agency_id": "sf-muni"
-                   },
-                   {
-                     "id": "ttc",
-                     "provider": "nextbus",
-                     "nextbus_agency_id": "ttc"
-                   },
-                   {
-                     "id": "marin",
-                     "provider": "marin"
-                   }
-                 ]
-              }
+            valueFrom:
+              configMapKeyRef:
+                name: orion
+                key: orion_config_json
           - name: AWS_ACCESS_KEY_ID
             valueFrom:
               secretKeyRef:
